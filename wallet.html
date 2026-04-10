@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
   <title>Wallet - TerraWealth Agro</title>
   <meta name="description" content="Manage your TerraWealth Agro wallet. Fund your account, withdraw, and view transaction history.">
   
@@ -11,375 +11,972 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ============================================
+       TERRAWEALTH AGRO - WALLET PAGE
+       Fully responsive, preserves all original styles
+    ============================================ */
+
+    :root {
+      --deep-green: #0B5D3B;
+      --deep-green-dark: #094a2f;
+      --deep-green-light: #0d7a4d;
+      --gold: #C9A646;
+      --gold-light: #d4b85c;
+      --gold-dark: #b8943a;
+      --white: #FFFFFF;
+      --off-white: #F8FAF9;
+      --light-gray: #F0F4F2;
+      --medium-gray: #9CA3AF;
+      --dark-gray: #374151;
+      --text-dark: #1F2937;
+      --text-light: #6B7280;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --info: #3B82F6;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text-dark);
+      background-color: var(--off-white);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Utility Classes */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-4 { gap: 1rem; }
+    .text-center { text-align: center; }
+    .mt-4 { margin-top: 1rem; }
+    .mb-4 { margin-bottom: 1rem; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 40px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--deep-green), var(--deep-green-light));
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--deep-green);
+      border: 1.5px solid var(--deep-green);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--text-dark);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--white);
+      color: white;
+    }
+    .btn-sm {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.75rem;
+    }
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Dashboard Layout - Mobile First */
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Sidebar (same as dashboard, responsive) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100%;
+      background: var(--white);
+      border-right: 1px solid var(--light-gray);
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+    .sidebar.active {
+      transform: translateX(0);
+    }
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--deep-green);
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--deep-green), var(--deep-green-light));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+    .sidebar-close {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 1rem 0;
+      overflow-y: auto;
+    }
+    .sidebar-nav ul {
+      list-style: none;
+    }
+    .sidebar-nav li {
+      margin: 0.25rem 1rem;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      color: var(--text-light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .sidebar-nav a.active {
+      background: var(--deep-green);
+      color: white;
+    }
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--light-gray);
+    }
+    .sidebar-footer .btn {
+      width: 100%;
+      text-align: center;
+      background: transparent;
+      border: 1px solid var(--deep-green);
+      color: var(--deep-green);
+    }
+
+    /* Hamburger Button */
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: var(--deep-green);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Overlay */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .sidebar-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 5rem 1rem 2rem;
+      width: 100%;
+      transition: margin-left 0.3s;
+    }
+
+    /* Dashboard Header */
+    .dashboard-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .dashboard-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+    .dashboard-subtitle {
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--deep-green), var(--deep-green-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    /* Wallet Balance Card */
+    .wallet-balance-card {
+      background: linear-gradient(135deg, var(--deep-green), var(--deep-green-light));
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+    .wallet-balance-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+    .wallet-balance-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
+    .wallet-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .wallet-actions .btn {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: white;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+    }
+    .stat-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    /* Transactions List */
+    .transactions-list {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .transactions-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .transactions-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 0.3rem 0.8rem;
+      background: var(--light-gray);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .filter-tab.active {
+      background: var(--deep-green);
+      color: white;
+    }
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--light-gray);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .transaction-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .transaction-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(11,93,59,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .transaction-details h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .transaction-details p {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+    .transaction-amount {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .positive { color: var(--success); }
+    .negative { color: var(--danger); }
+
+    /* Disclaimer */
+    .disclaimer {
+      background: #FEF5e0;
+      border-left: 4px solid var(--gold);
+      padding: 0.8rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal {
+      background: white;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+    .modal-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title {
+      font-size: 1.2rem;
+    }
+    .modal-close {
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 0.7rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--deep-green);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+    }
+    .empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 768px) {
+      .sidebar {
+        transform: translateX(0);
+        position: fixed;
+      }
+      .hamburger {
+        display: none;
+      }
+      .sidebar-close {
+        display: none;
+      }
+      .main-content {
+        margin-left: 280px;
+        padding: 2rem;
+      }
+      .dashboard-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .transactions-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .wallet-balance-value {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .wallet-actions {
+        flex-direction: column;
+      }
+      .wallet-actions .btn {
+        width: 100%;
+      }
+      .filter-tabs {
+        justify-content: center;
+      }
+      .modal-footer {
+        flex-direction: column;
+      }
+      .modal-footer .btn {
+        width: 100%;
+      }
+      .sidebar-close {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-content {
+        padding: 4.5rem 0.8rem 1.5rem;
+      }
+      .dashboard-title {
+        font-size: 1.3rem;
+      }
+      .stat-value {
+        font-size: 1.1rem;
+      }
+      .wallet-balance-value {
+        font-size: 1.8rem;
+      }
+      .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .transaction-amount {
+        align-self: flex-end;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Dashboard Layout -->
-  <div class="dashboard">
-    <!-- Sidebar Toggle -->
-    <button class="sidebar-toggle">☰</button>
-    
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <a href="index.html" class="logo">
-          <div class="logo-icon">🌿</div>
-          <span>TerraWealth</span>
-        </a>
-      </div>
-      
-      <nav class="sidebar-nav">
-        <ul>
-          <li><a href="dashboard.html">
-            <span>📊</span>
-            <span>Dashboard</span>
-          </a></li>
-          <li><a href="invest.html">
-            <span>📈</span>
-            <span>Invest</span>
-          </a></li>
-          <li><a href="wallet.html" class="active">
-            <span>💳</span>
-            <span>Wallet</span>
-          </a></li>
-          <li><a href="updates.html">
-            <span>📰</span>
-            <span>Updates</span>
-          </a></li>
-          <li><a href="profile.html">
-            <span>👤</span>
-            <span>Profile</span>
-          </a></li>
-        </ul>
-      </nav>
-      
-      <div class="sidebar-footer">
-        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
-          <span>🚪</span>
-          <span>Logout</span>
-        </a>
-      </div>
-    </aside>
-    
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Header -->
-      <div class="dashboard-header">
-        <div>
-          <h1 class="dashboard-title">My Wallet</h1>
-          <p class="dashboard-subtitle">Manage your funds and view transaction history</p>
-        </div>
-        <div class="user-menu">
-          <div class="user-avatar" id="header-avatar">U</div>
-        </div>
-      </div>
-      
-      <!-- Balance Card -->
-      <div class="wallet-balance-card">
-        <div class="wallet-balance-label">Available Balance</div>
-        <div class="wallet-balance-value" id="wallet-balance">$0.00</div>
-        <div class="wallet-actions">
-          <button class="btn btn-gold" onclick="openFundModal()">+ Fund Wallet</button>
-          <button class="btn btn-outline" onclick="openWithdrawModal()">Withdraw</button>
-        </div>
-      </div>
-      
-      <!-- Quick Stats -->
-      <div class="stats-grid" style="margin-bottom: 2rem;">
-        <div class="stat-card">
-          <div class="stat-label">Total Deposits</div>
-          <div class="stat-value" id="total-deposits" style="color: var(--success);">$0.00</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Withdrawals</div>
-          <div class="stat-value" id="total-withdrawals" style="color: var(--danger);">$0.00</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Invested</div>
-          <div class="stat-value" id="total-invested-wallet">$0.00</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Returns Received</div>
-          <div class="stat-value" id="total-returns" style="color: var(--success);">$0.00</div>
-        </div>
-      </div>
-      
-      <!-- Transactions List -->
-      <div class="transactions-list">
-        <div class="transactions-header">
-          <h3 class="transactions-title">Transaction History</h3>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="filter-tab active" data-txn-filter="all">All</button>
-            <button class="filter-tab" data-txn-filter="deposit">Deposits</button>
-            <button class="filter-tab" data-txn-filter="withdrawal">Withdrawals</button>
-            <button class="filter-tab" data-txn-filter="investment">Investments</button>
-          </div>
-        </div>
-        <div id="transactions-list">
-          <!-- Transactions will be rendered here -->
-        </div>
-      </div>
-      
-      <!-- Disclaimer -->
-      <div class="disclaimer" style="margin-top: 2rem;">
-        <p class="disclaimer-text">
-          <strong>Important:</strong> Withdrawal requests are processed within 1-3 business days. 
-          A processing fee may apply depending on the withdrawal method.
-        </p>
-      </div>
-    </main>
-  </div>
-  
-  <!-- Fund Wallet Modal -->
-  <div class="modal-overlay" id="fund-modal">
-    <div class="modal" style="max-width: 450px;">
-      <div class="modal-header">
-        <h3 class="modal-title">Fund Your Wallet</h3>
-        <button class="modal-close" onclick="closeFundModal()">×</button>
-      </div>
-      <div class="modal-body">
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">
-          Add funds to your wallet to start investing. This is a simulated payment for demonstration purposes.
-        </p>
-        <div class="form-group">
-          <label class="form-label" for="fund-amount">Amount ($)</label>
-          <input type="number" id="fund-amount" class="form-input" placeholder="Enter amount" min="10" value="1000">
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(500)">$500</button>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(1000)">$1,000</button>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(5000)">$5,000</button>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeFundModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="confirmFund()">Add Funds</button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Withdraw Modal -->
-  <div class="modal-overlay" id="withdraw-modal">
-    <div class="modal" style="max-width: 450px;">
-      <div class="modal-header">
-        <h3 class="modal-title">Withdraw Funds</h3>
-        <button class="modal-close" onclick="closeWithdrawModal()">×</button>
-      </div>
-      <div class="modal-body">
-        <p style="margin-bottom: 1rem; color: var(--text-light);">
-          Available balance: <strong id="withdraw-balance">$0.00</strong>
-        </p>
-        <div class="form-group">
-          <label class="form-label" for="withdraw-amount">Amount ($)</label>
-          <input type="number" id="withdraw-amount" class="form-input" placeholder="Enter amount" min="10">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="withdraw-method">Withdrawal Method</label>
-          <select id="withdraw-method" class="form-select">
-            <option value="bank">Bank Transfer</option>
-            <option value="mobile">Mobile Money</option>
-          </select>
-        </div>
-        <div class="disclaimer" style="margin: 0;">
-          <p class="disclaimer-text" style="font-size: 0.8rem;">
-            Withdrawals are processed within 1-3 business days. A $5 processing fee applies.
-          </p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeWithdrawModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="confirmWithdraw()">Request Withdrawal</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="js/auth.js"></script>
-  <script src="js/wallet.js"></script>
-  <script src="js/projects.js"></script>
-  <script src="js/investment.js"></script>
-  <script src="js/main.js"></script>
+<!-- Dashboard Layout -->
+<div class="dashboard">
+  <!-- Hamburger Button -->
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span><span></span><span></span>
+  </div>
+  <!-- Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
   
-  <script>
-    // Check authentication
-    const currentUser = requireAuth();
-    if (!currentUser) {
-      throw new Error('Not authenticated');
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🌿</div>
+        <span>TerraWealth</span>
+      </a>
+      <button class="sidebar-close" id="sidebarCloseBtn">✕</button>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="dashboard.html"><span>📊</span> Dashboard</a></li>
+        <li><a href="invest.html"><span>📈</span> Invest</a></li>
+        <li><a href="wallet.html" class="active"><span>💳</span> Wallet</a></li>
+        <li><a href="updates.html"><span>📰</span> Updates</a></li>
+        <li><a href="profile.html"><span>👤</span> Profile</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="#" onclick="handleLogout(); return false;" class="btn">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">My Wallet</h1>
+        <p class="dashboard-subtitle">Manage your funds and view transaction history</p>
+      </div>
+      <div class="user-menu">
+        <div class="user-avatar" id="header-avatar">U</div>
+      </div>
+    </div>
+    
+    <!-- Balance Card -->
+    <div class="wallet-balance-card">
+      <div class="wallet-balance-label">Available Balance</div>
+      <div class="wallet-balance-value" id="wallet-balance">$0.00</div>
+      <div class="wallet-actions">
+        <button class="btn btn-gold" onclick="openFundModal()">+ Fund Wallet</button>
+        <button class="btn btn-outline" onclick="openWithdrawModal()">Withdraw</button>
+      </div>
+    </div>
+    
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Total Deposits</div><div class="stat-value" id="total-deposits" style="color: var(--success);">$0.00</div></div>
+      <div class="stat-card"><div class="stat-label">Total Withdrawals</div><div class="stat-value" id="total-withdrawals" style="color: var(--danger);">$0.00</div></div>
+      <div class="stat-card"><div class="stat-label">Total Invested</div><div class="stat-value" id="total-invested-wallet">$0.00</div></div>
+      <div class="stat-card"><div class="stat-label">Returns Received</div><div class="stat-value" id="total-returns" style="color: var(--success);">$0.00</div></div>
+    </div>
+    
+    <!-- Transactions List -->
+    <div class="transactions-list">
+      <div class="transactions-header">
+        <h3 class="transactions-title">Transaction History</h3>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-txn-filter="all">All</button>
+          <button class="filter-tab" data-txn-filter="deposit">Deposits</button>
+          <button class="filter-tab" data-txn-filter="withdrawal">Withdrawals</button>
+          <button class="filter-tab" data-txn-filter="investment">Investments</button>
+        </div>
+      </div>
+      <div id="transactions-list"></div>
+    </div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <p><strong>Important:</strong> Withdrawal requests are processed within 1-3 business days. A processing fee may apply depending on the withdrawal method.</p>
+    </div>
+  </main>
+</div>
+
+<!-- Fund Wallet Modal -->
+<div class="modal-overlay" id="fund-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Fund Your Wallet</h3>
+      <button class="modal-close" onclick="closeFundModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom: 1rem;">Add funds to your wallet to start investing. This is a simulated payment.</p>
+      <div class="form-group">
+        <label class="form-label">Amount ($)</label>
+        <input type="number" id="fund-amount" class="form-input" placeholder="Enter amount" min="10" value="1000">
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(500)">$500</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(1000)">$1,000</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(5000)">$5,000</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeFundModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmFund()">Add Funds</button>
+    </div>
+  </div>
+</div>
+
+<!-- Withdraw Modal -->
+<div class="modal-overlay" id="withdraw-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Withdraw Funds</h3>
+      <button class="modal-close" onclick="closeWithdrawModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom: 0.5rem;">Available balance: <strong id="withdraw-balance">$0.00</strong></p>
+      <div class="form-group">
+        <label class="form-label">Amount ($)</label>
+        <input type="number" id="withdraw-amount" class="form-input" placeholder="Enter amount" min="10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Withdrawal Method</label>
+        <select id="withdraw-method" class="form-select">
+          <option value="bank">Bank Transfer</option>
+          <option value="mobile">Mobile Money</option>
+        </select>
+      </div>
+      <div class="disclaimer" style="margin: 0; font-size: 0.7rem;">
+        <p>Withdrawals are processed within 1-3 business days. A $5 processing fee applies.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeWithdrawModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmWithdraw()">Request Withdrawal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ==================== AUTH & STORAGE HELPERS ====================
+  function getCurrentUser() {
+    return JSON.parse(localStorage.getItem('terrawealth_current_user') || 'null');
+  }
+
+  function requireAuth() {
+    const user = getCurrentUser();
+    if (!user) {
+      window.location.href = 'login.html';
+      return null;
     }
-    
-    // Update header
-    document.getElementById('header-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
-    
-    let txnFilter = 'all';
-    
-    // Render wallet and transactions
-    function renderWallet() {
-      const user = getCurrentUser();
-      document.getElementById('wallet-balance').textContent = Format.currency(user.walletBalance || 0);
-      document.getElementById('withdraw-balance').textContent = Format.currency(user.walletBalance || 0);
-      
-      // Calculate stats
-      const transactions = getUserTransactions(user.id);
-      const deposits = transactions.filter(t => t.type === 'deposit').reduce((sum, t) => sum + t.amount, 0);
-      const withdrawals = transactions.filter(t => t.type === 'withdrawal').reduce((sum, t) => sum + Math.abs(t.amount), 0);
-      const investments = transactions.filter(t => t.type === 'investment').reduce((sum, t) => sum + Math.abs(t.amount), 0);
-      const returns = transactions.filter(t => t.type === 'return').reduce((sum, t) => sum + t.amount, 0);
-      
-      document.getElementById('total-deposits').textContent = Format.currency(deposits);
-      document.getElementById('total-withdrawals').textContent = Format.currency(withdrawals);
-      document.getElementById('total-invested-wallet').textContent = Format.currency(investments);
-      document.getElementById('total-returns').textContent = Format.currency(returns);
-      
-      renderTransactions();
-    }
-    
-    // Render transactions
-    function renderTransactions() {
-      const container = document.getElementById('transactions-list');
-      let transactions = getUserTransactions(currentUser.id);
-      
-      // Apply filter
-      if (txnFilter !== 'all') {
-        transactions = transactions.filter(t => t.type === txnFilter);
-      }
-      
-      if (transactions.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state" style="padding: 3rem;">
-            <div class="empty-icon">📋</div>
-            <h3 class="empty-title">No Transactions</h3>
-            <p class="empty-text">Your transaction history will appear here.</p>
-          </div>
-        `;
-        return;
-      }
-      
-      const icons = {
-        deposit: '💰',
-        withdrawal: '💸',
-        investment: '📈',
-        return: '💵'
-      };
-      
-      const typeLabels = {
-        deposit: 'Deposit',
-        withdrawal: 'Withdrawal',
-        investment: 'Investment',
-        return: 'Return'
-      };
-      
-      container.innerHTML = transactions.map(txn => {
-        const isPositive = txn.amount > 0;
-        return `
-          <div class="transaction-item">
-            <div class="transaction-info">
-              <div class="transaction-icon ${txn.type}">${icons[txn.type]}</div>
-              <div class="transaction-details">
-                <h4>${typeLabels[txn.type]}</h4>
-                <p>${txn.description}</p>
-                <p style="font-size: 0.75rem; margin-top: 0.25rem;">${Format.dateTime(txn.date)}</p>
-              </div>
-            </div>
-            <span class="transaction-amount ${isPositive ? 'positive' : 'negative'}">
-              ${isPositive ? '+' : ''}${Format.currency(txn.amount)}
-            </span>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // Transaction filter handlers
-    document.querySelectorAll('[data-txn-filter]').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('[data-txn-filter]').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        txnFilter = tab.dataset.txnFilter;
-        renderTransactions();
-      });
+    return user;
+  }
+
+  function logoutUser() {
+    localStorage.removeItem('terrawealth_current_user');
+    window.location.href = 'index.html';
+  }
+
+  function handleLogout() { logoutUser(); }
+
+  // ==================== WALLET & TRANSACTIONS ====================
+  function getUserTransactions(userId) {
+    const all = JSON.parse(localStorage.getItem('terrawealth_transactions') || '[]');
+    return all.filter(t => t.userId === userId).sort((a,b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function addTransaction(userId, type, amount, description) {
+    const transactions = JSON.parse(localStorage.getItem('terrawealth_transactions') || '[]');
+    transactions.push({
+      id: Date.now(),
+      userId, type, amount, description,
+      date: new Date().toISOString(),
+      status: 'completed'
     });
-    
-    // Fund modal functions
-    function openFundModal() {
-      document.getElementById('fund-amount').value = '1000';
-      document.getElementById('fund-modal').classList.add('active');
-    }
-    
-    function closeFundModal() {
-      document.getElementById('fund-modal').classList.remove('active');
-    }
-    
-    function setFundAmount(amount) {
-      document.getElementById('fund-amount').value = amount;
-    }
-    
-    function confirmFund() {
-      const amount = parseFloat(document.getElementById('fund-amount').value);
-      
-      if (!amount || amount < 10) {
-        Toast.error('Minimum deposit is $10');
-        return;
-      }
-      
-      const result = fundWallet(currentUser.id, amount);
-      
-      if (result.success) {
-        Toast.success(result.message);
-        closeFundModal();
-        renderWallet();
-      } else {
-        Toast.error(result.message);
+    localStorage.setItem('terrawealth_transactions', JSON.stringify(transactions));
+  }
+
+  function updateUserWallet(userId, newBalance) {
+    const users = JSON.parse(localStorage.getItem('terrawealth_users') || '[]');
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx !== -1) {
+      users[idx].walletBalance = newBalance;
+      localStorage.setItem('terrawealth_users', JSON.stringify(users));
+      const current = getCurrentUser();
+      if (current && current.id === userId) {
+        current.walletBalance = newBalance;
+        localStorage.setItem('terrawealth_current_user', JSON.stringify(current));
       }
     }
-    
-    // Withdraw modal functions
-    function openWithdrawModal() {
-      const user = getCurrentUser();
-      document.getElementById('withdraw-amount').value = '';
-      document.getElementById('withdraw-balance').textContent = Format.currency(user.walletBalance || 0);
-      document.getElementById('withdraw-modal').classList.add('active');
+  }
+
+  function fundWallet(userId, amount) {
+    if (amount < 10) return { success: false, message: 'Minimum deposit $10' };
+    const user = getCurrentUser();
+    if (!user || user.id !== userId) return { success: false, message: 'User error' };
+    const newBalance = (user.walletBalance || 0) + amount;
+    updateUserWallet(userId, newBalance);
+    addTransaction(userId, 'deposit', amount, 'Wallet funded via simulated payment');
+    return { success: true, message: `Added $${amount.toLocaleString()}` };
+  }
+
+  function withdrawFromWallet(userId, amount) {
+    const user = getCurrentUser();
+    if (!user) return { success: false, message: 'User error' };
+    if (amount < 10) return { success: false, message: 'Minimum withdrawal $10' };
+    if (amount > (user.walletBalance || 0)) return { success: false, message: 'Insufficient balance' };
+    const newBalance = (user.walletBalance || 0) - amount;
+    updateUserWallet(userId, newBalance);
+    addTransaction(userId, 'withdrawal', -amount, 'Withdrawal request processed');
+    return { success: true, message: `Withdrawal of $${amount.toLocaleString()} initiated` };
+  }
+
+  // ==================== RENDER UI ====================
+  let currentFilter = 'all';
+  const currentUser = requireAuth();
+  if (!currentUser) throw new Error('Not authenticated');
+  document.getElementById('header-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
+
+  function renderWallet() {
+    const user = getCurrentUser();
+    if (!user) return;
+    document.getElementById('wallet-balance').innerText = formatCurrency(user.walletBalance || 0);
+    document.getElementById('withdraw-balance').innerText = formatCurrency(user.walletBalance || 0);
+    const transactions = getUserTransactions(user.id);
+    const deposits = transactions.filter(t => t.type === 'deposit').reduce((s,t) => s + t.amount, 0);
+    const withdrawals = transactions.filter(t => t.type === 'withdrawal').reduce((s,t) => s + Math.abs(t.amount), 0);
+    const investments = transactions.filter(t => t.type === 'investment').reduce((s,t) => s + Math.abs(t.amount), 0);
+    const returns = transactions.filter(t => t.type === 'return').reduce((s,t) => s + t.amount, 0);
+    document.getElementById('total-deposits').innerText = formatCurrency(deposits);
+    document.getElementById('total-withdrawals').innerText = formatCurrency(withdrawals);
+    document.getElementById('total-invested-wallet').innerText = formatCurrency(investments);
+    document.getElementById('total-returns').innerText = formatCurrency(returns);
+    renderTransactions();
+  }
+
+  function renderTransactions() {
+    const container = document.getElementById('transactions-list');
+    let transactions = getUserTransactions(currentUser.id);
+    if (currentFilter !== 'all') {
+      transactions = transactions.filter(t => t.type === currentFilter);
     }
-    
-    function closeWithdrawModal() {
-      document.getElementById('withdraw-modal').classList.remove('active');
+    if (transactions.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><h3>No Transactions</h3><p>Your history will appear here.</p></div>`;
+      return;
     }
-    
-    function confirmWithdraw() {
-      const amount = parseFloat(document.getElementById('withdraw-amount').value);
-      const user = getCurrentUser();
-      
-      if (!amount || amount < 10) {
-        Toast.error('Minimum withdrawal is $10');
-        return;
-      }
-      
-      if (amount > (user.walletBalance || 0)) {
-        Toast.error('Insufficient balance');
-        return;
-      }
-      
-      const result = withdrawFromWallet(currentUser.id, amount);
-      
-      if (result.success) {
-        Toast.success(result.message + ' Your request will be processed within 1-3 business days.');
-        closeWithdrawModal();
-        renderWallet();
-      } else {
-        Toast.error(result.message);
-      }
-    }
-    
-    // Handle logout
-    function handleLogout() {
-      logoutUser();
-      Toast.success('You have been logged out successfully.');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1500);
-    }
-    
-    // Initial render
-    renderWallet();
-  </script>
+    const icons = { deposit:'💰', withdrawal:'💸', investment:'📈', return:'💵' };
+    const labels = { deposit:'Deposit', withdrawal:'Withdrawal', investment:'Investment', return:'Return' };
+    container.innerHTML = transactions.map(txn => `
+      <div class="transaction-item">
+        <div class="transaction-info">
+          <div class="transaction-icon">${icons[txn.type]}</div>
+          <div class="transaction-details">
+            <h4>${labels[txn.type]}</h4>
+            <p>${txn.description}</p>
+            <p style="font-size:0.7rem; margin-top:0.2rem;">${formatDateTime(txn.date)}</p>
+          </div>
+        </div>
+        <span class="transaction-amount ${txn.amount > 0 ? 'positive' : 'negative'}">
+          ${txn.amount > 0 ? '+' : ''}${formatCurrency(txn.amount)}
+        </span>
+      </div>
+    `).join('');
+  }
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(amount || 0);
+  }
+  function formatDateTime(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+  }
+
+  // Filter tabs
+  document.querySelectorAll('[data-txn-filter]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('[data-txn-filter]').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentFilter = tab.dataset.txnFilter;
+      renderTransactions();
+    });
+  });
+
+  // Fund modal
+  function openFundModal() { document.getElementById('fund-modal').classList.add('active'); }
+  function closeFundModal() { document.getElementById('fund-modal').classList.remove('active'); }
+  function setFundAmount(amount) { document.getElementById('fund-amount').value = amount; }
+  function confirmFund() {
+    const amount = parseFloat(document.getElementById('fund-amount').value);
+    if (!amount || amount < 10) { Toast.error('Minimum deposit $10'); return; }
+    const result = fundWallet(currentUser.id, amount);
+    if (result.success) { Toast.success(result.message); closeFundModal(); renderWallet(); }
+    else Toast.error(result.message);
+  }
+
+  // Withdraw modal
+  function openWithdrawModal() { document.getElementById('withdraw-modal').classList.add('active'); }
+  function closeWithdrawModal() { document.getElementById('withdraw-modal').classList.remove('active'); }
+  function confirmWithdraw() {
+    const amount = parseFloat(document.getElementById('withdraw-amount').value);
+    if (!amount || amount < 10) { Toast.error('Minimum withdrawal $10'); return; }
+    const result = withdrawFromWallet(currentUser.id, amount);
+    if (result.success) { Toast.success(result.message); closeWithdrawModal(); renderWallet(); }
+    else Toast.error(result.message);
+  }
+
+  // Toast (simple)
+  const Toast = {
+    container: null,
+    init() { if(!this.container){ this.container=document.createElement('div'); this.container.style.position='fixed'; this.container.style.top='1rem'; this.container.style.right='1rem'; this.container.style.zIndex='9999'; document.body.appendChild(this.container); } },
+    show(msg, type='info') { this.init(); const toast=document.createElement('div'); toast.className=`toast ${type}`; toast.innerText=msg; toast.style.background='white'; toast.style.padding='0.8rem 1.2rem'; toast.style.borderRadius='12px'; toast.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'; toast.style.marginBottom='0.5rem'; toast.style.borderLeft=`4px solid ${type==='error'?'#EF4444':'#10B981'}`; this.container.appendChild(toast); setTimeout(()=>toast.remove(),3000); },
+    success(msg){this.show(msg,'success')}, error(msg){this.show(msg,'error')}
+  };
+
+  // Sidebar responsiveness
+  const hamburger = document.getElementById('hamburgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeSidebarBtn = document.getElementById('sidebarCloseBtn');
+  function openSidebar() { sidebar.classList.add('active'); overlay.classList.add('active'); hamburger.classList.add('active'); document.body.style.overflow='hidden'; }
+  function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); hamburger.classList.remove('active'); document.body.style.overflow=''; }
+  if (hamburger) hamburger.addEventListener('click', openSidebar);
+  if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+  if (overlay) overlay.addEventListener('click', closeSidebar);
+  window.addEventListener('resize', () => { if(window.innerWidth>=768) closeSidebar(); });
+  document.querySelectorAll('.sidebar-nav a').forEach(link => link.addEventListener('click', () => { if(window.innerWidth<768) closeSidebar(); }));
+
+  // Initial render
+  renderWallet();
+</script>
 </body>
 </html>
