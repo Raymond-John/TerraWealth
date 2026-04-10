@@ -3,303 +3,1026 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - TerraWealth Agro</title>
+  <title>TerraWealth Agro | Contact – World-Class Investment Platform</title>
   <meta name="description" content="Get in touch with TerraWealth Agro. We're here to help with your investment questions.">
   
-  <!-- Fonts -->
+  <!-- Fonts & Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* ------------------------------------------------------------
+       TERRAWEALTH AGRO — WORLD-CLASS CONTACT PAGE
+       Preserves all original content, adds premium navbar, preloader, glass footer
+    ------------------------------------------------------------ */
+    :root {
+      --deep-green: #0B5D3B;
+      --deep-green-dark: #094a2f;
+      --deep-green-light: #0d7a4d;
+      --gold: #C9A646;
+      --gold-light: #d4b85c;
+      --gold-dark: #b8943a;
+      --white: #FFFFFF;
+      --off-white: #F8FAF9;
+      --light-gray: #F0F4F2;
+      --medium-gray: #9CA3AF;
+      --dark-gray: #374151;
+      --text-dark: #1F2937;
+      --text-light: #6B7280;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --info: #3B82F6;
+      --shadow-xs: 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md: 0 12px 24px -8px rgba(0,0,0,0.08), 0 4px 8px -2px rgba(0,0,0,0.02);
+      --shadow-lg: 0 20px 32px -12px rgba(0,0,0,0.12), 0 8px 12px -6px rgba(0,0,0,0.05);
+      --shadow-xl: 0 30px 40px -16px rgba(0,0,0,0.18);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --transition-smooth: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Open Sans', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text-dark);
+      background-color: var(--off-white);
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ========== WORLD-CLASS NAVBAR (GLASS, MODERN, ANIMATED) ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(11, 93, 59, 0.08);
+      transition: all 0.4s ease;
+      padding: 0.5rem 0;
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-md);
+      padding: 0.2rem 0;
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.65rem;
+      background: linear-gradient(135deg, var(--deep-green) 0%, var(--deep-green-light) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: transform 0.2s;
+    }
+    .logo:hover { transform: scale(1.02); }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(145deg, var(--deep-green), var(--deep-green-dark));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.5rem;
+      box-shadow: 0 6px 12px -6px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--dark-gray);
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color 0.2s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0%;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--deep-green); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--deep-green); font-weight: 700; }
+
+    .nav-auth {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-outline-light {
+      background: transparent;
+      border: 1.5px solid var(--deep-green);
+      color: var(--deep-green);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    .btn-outline-light:hover {
+      background: var(--deep-green);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .btn-primary-gold {
+      background: linear-gradient(100deg, var(--gold), var(--gold-light));
+      border: none;
+      color: #1e2a2a;
+      padding: 0.5rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s;
+    }
+    .btn-primary-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      filter: brightness(1.02);
+    }
+
+    /* mobile menu button */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1150;
+      position: relative;
+    }
+    .mobile-menu-btn span {
+      width: 28px;
+      height: 2.5px;
+      background: var(--deep-green);
+      border-radius: 4px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* WORLD-CLASS FULLSCREEN HAMBURGER MENU (SLIDE FROM RIGHT) */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 40, 25, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1200;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .mobile-menu-overlay.active {
+      transform: translateX(0);
+      visibility: visible;
+    }
+    .mobile-menu-container {
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      padding: 2rem;
+    }
+    .mobile-menu-container .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .mobile-menu-container .nav-links li {
+      list-style: none;
+    }
+    .mobile-menu-container .nav-links a {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.3px;
+      transition: all 0.2s;
+      position: relative;
+      display: inline-block;
+    }
+    .mobile-menu-container .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.25s;
+    }
+    .mobile-menu-container .nav-links a:hover::after,
+    .mobile-menu-container .nav-links a.active::after {
+      width: 70%;
+    }
+    .mobile-menu-container .nav-links a:hover {
+      color: var(--gold-light);
+    }
+    .mobile-menu-container .nav-auth {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+    }
+    .mobile-menu-container .nav-auth .btn {
+      width: 100%;
+      text-align: center;
+      background: rgba(255,255,240,0.1);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,215,120,0.4);
+      color: white;
+      padding: 0.9rem;
+      font-size: 1rem;
+    }
+    .mobile-menu-container .nav-auth .btn-primary-gold {
+      background: linear-gradient(100deg, var(--gold), var(--gold-light));
+      color: #1e2a2a;
+      border: none;
+    }
+    .mobile-close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-close-btn:hover {
+      background: rgba(255,255,255,0.4);
+      transform: rotate(90deg);
+    }
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 880px) {
+      .nav-links, .nav-auth {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      /* hide old .mobile-menu if exists */
+      .mobile-menu {
+        display: none;
+      }
+    }
+
+    /* ========== PAGE HEADER (HERO) ========== */
+    .page-header {
+      background: linear-gradient(135deg, var(--deep-green) 0%, var(--deep-green-light) 100%);
+      padding: 6rem 0 5rem;
+      color: var(--white);
+      text-align: center;
+      margin-top: 74px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 20 L45 35 L60 40 L45 45 L40 60 L35 45 L20 40 L35 35 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 60px;
+      opacity: 0.3;
+      animation: slowDrift 40s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes slowDrift {
+      0% { background-position: 0 0; }
+      100% { background-position: 120px 120px; }
+    }
+    .page-header .container {
+      position: relative;
+      z-index: 2;
+    }
+    .page-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .page-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Contact sections (preserved) */
+    .section {
+      padding: 5rem 0;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+    }
+    .section-label {
+      display: inline-block;
+      padding: 0.375rem 1rem;
+      background: rgba(11, 93, 59, 0.1);
+      color: var(--deep-green);
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s;
+    }
+    .contact-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--deep-green) 0%, var(--deep-green-light) 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .contact-form-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s;
+    }
+    .contact-form-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    .disclaimer {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--warning);
+      margin: 2rem 0;
+    }
+    .disclaimer-text {
+      font-size: 0.875rem;
+      color: var(--text-dark);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--deep-green) 0%, var(--deep-green-light) 100%);
+      color: var(--white);
+      border-radius: 40px;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      font-size: 0.9375rem;
+      border: 2px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      transition: all 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--deep-green);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(11,93,59,0.1);
+    }
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 0 1.2rem;
+      }
+    }
+
+    /* ========== WORLD-CLASS PRELOADER ========== */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0B5D3B 0%, #0a4a2e 100%);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.6s;
+    }
+    #preloader.hide-preloader {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .preloader-content {
+      text-align: center;
+      animation: fadeInScale 0.7s ease-out;
+    }
+    .preloader-logo {
+      font-size: 5rem;
+      animation: gentleFloat 2s infinite ease-in-out, leafGlow 1.8s infinite alternate;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+    .preloader-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      background: linear-gradient(135deg, #FFFFFF 30%, #C9A646 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .preloader-sub {
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+    .preloader-spinner {
+      width: 56px;
+      height: 56px;
+      margin-top: 1rem;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top: 3px solid var(--gold);
+      border-right: 3px solid var(--gold-light);
+      border-radius: 50%;
+      animation: spinLoader 0.9s infinite linear;
+    }
+    @keyframes spinLoader { to { transform: rotate(360deg); } }
+    @keyframes gentleFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes leafGlow {
+      0% { text-shadow: 0 0 0px rgba(201,166,70,0.2); }
+      100% { text-shadow: 0 0 20px rgba(201,166,70,0.6); }
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ========== GLASSMORPHIC FOOTER ========== */
+    .footer {
+      background: rgba(31, 41, 55, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+      margin-top: 2rem;
+    }
+    .footer .logo {
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .footer .logo-icon {
+      background: var(--gold);
+    }
+    .footer-text {
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+      font-size: 0.9375rem;
+    }
+    .footer-title {
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9375rem;
+      transition: all 0.2s ease;
+    }
+    .footer-links a:hover {
+      color: var(--gold);
+      transform: translateX(3px);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    .footer-copyright {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.875rem;
+    }
+
+    /* utility animations */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    [data-animate].animate-fadeInUp {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="index.html" class="logo">
-        <div class="logo-icon">🌿</div>
-        <span>TerraWealth</span>
-      </a>
-      
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-      </ul>
-      
-      <div class="nav-auth">
-        <a href="login.html" class="btn btn-secondary btn-sm auth-link">Login</a>
-        <a href="signup.html" class="btn btn-primary btn-sm auth-link">Get Started</a>
-        <a href="dashboard.html" class="btn btn-primary btn-sm dashboard-link" style="display: none;">Dashboard</a>
-      </div>
-      
-      <button class="mobile-menu-btn" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Page Header -->
-  <header class="page-header" style="padding-top: 120px;">
-    <div class="container">
-      <h1 class="page-title">Contact Us</h1>
-      <p class="page-subtitle">We're here to help with your investment journey</p>
-    </div>
-  </header>
+<!-- WORLD-CLASS PRELOADER -->
+<div id="preloader">
+  <div class="preloader-content">
+    <div class="preloader-logo">🌿</div>
+    <div class="preloader-text">TerraWealth Agro</div>
+    <div class="preloader-sub">Real Assets · Real Returns</div>
+    <div class="preloader-spinner"></div>
+  </div>
+</div>
 
-  <!-- Contact Section -->
-  <section class="section">
-    <div class="container">
-      <div class="contact-grid">
-        <!-- Contact Info -->
-        <div class="contact-info">
-          <div class="contact-item" data-animate="animate-fadeInUp">
-            <div class="contact-icon">📍</div>
-            <div>
-              <h4>Office Address</h4>
-              <p>123 Investment Tower, Victoria Island<br>Lagos, Nigeria</p>
-            </div>
-          </div>
-          
-          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
-            <div class="contact-icon">📧</div>
-            <div>
-              <h4>Email</h4>
-              <p>support@terrawealthagro.com<br>investments@terrawealthagro.com</p>
-            </div>
-          </div>
-          
-          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
-            <div class="contact-icon">📞</div>
-            <div>
-              <h4>Phone</h4>
-              <p>+234 800 123 4567<br>+234 800 987 6543</p>
-            </div>
-          </div>
-          
-          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
-            <div class="contact-icon">🕐</div>
-            <div>
-              <h4>Business Hours</h4>
-              <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
-            </div>
+<!-- ENHANCED NAVBAR (glass, world‑class) -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌾</div>
+      <span>TerraWealth</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="invest.html">Invest</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-outline-light">Sign In</a>
+      <a href="signup.html" class="btn-primary-gold">Get Started</a>
+      <a href="dashboard.html" class="btn-primary-gold dashboard-link" style="display: none;">Dashboard</a>
+    </div>
+    <button class="mobile-menu-btn" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- WORLD-CLASS FULLSCREEN HAMBURGER MENU -->
+<div id="mobileMenuOverlay" class="mobile-menu-overlay">
+  <button id="closeMobileMenu" class="mobile-close-btn" aria-label="Close menu">✕</button>
+  <div class="mobile-menu-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="invest.html">Invest</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-outline-light">Sign In</a>
+      <a href="signup.html" class="btn-primary-gold">Get Started</a>
+      <a href="dashboard.html" class="btn-primary-gold dashboard-link" style="display: none;">Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="container">
+    <h1 class="page-title">Contact Us</h1>
+    <p class="page-subtitle">We're here to help with your investment journey</p>
+  </div>
+</header>
+
+<!-- Contact Section -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <div class="contact-item" data-animate="animate-fadeInUp">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Office Address</h4>
+            <p>123 Investment Tower, Victoria Island<br>Lagos, Nigeria</p>
           </div>
         </div>
         
-        <!-- Contact Form -->
-        <div class="contact-form-card" data-animate="animate-fadeInUp" style="animation-delay: 0.15s;">
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Send Us a Message</h3>
-          <form id="contact-form">
-            <div class="form-group">
-              <label class="form-label" for="name">Full Name</label>
-              <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="email">Email Address</label>
-              <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="subject">Subject</label>
-              <select id="subject" name="subject" class="form-select" required>
-                <option value="">Select a subject</option>
-                <option value="general">General Inquiry</option>
-                <option value="investment">Investment Question</option>
-                <option value="support">Account Support</option>
-                <option value="partnership">Partnership Opportunity</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label" for="message">Message</label>
-              <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-primary btn-full">
-              <span>Send Message</span>
-              <span>→</span>
-            </button>
-          </form>
+        <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>support@terrawealthagro.com<br>investments@terrawealthagro.com</p>
+          </div>
+        </div>
+        
+        <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>+234 800 123 4567<br>+234 800 987 6543</p>
+          </div>
+        </div>
+        
+        <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Business Hours</h4>
+            <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
+          </div>
         </div>
       </div>
+      
+      <!-- Contact Form -->
+      <div class="contact-form-card" data-animate="animate-fadeInUp" style="animation-delay: 0.15s;">
+        <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Send Us a Message</h3>
+        <form id="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject</label>
+            <select id="subject" name="subject" class="form-select" required>
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="investment">Investment Question</option>
+              <option value="support">Account Support</option>
+              <option value="partnership">Partnership Opportunity</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-full">
+            <span>Send Message</span>
+            <span>→</span>
+          </button>
+        </form>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ Section -->
-  <section class="section" style="background: var(--light-gray);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">FAQ</span>
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">
-          Find answers to common questions about investing with TerraWealth Agro.
+<!-- FAQ Section -->
+<section class="section" style="background: var(--light-gray);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">
+        Find answers to common questions about investing with TerraWealth Agro.
+      </p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card" data-animate="animate-fadeInUp">
+        <h3 class="feature-title" style="font-size: 1.125rem;">How do I start investing?</h3>
+        <p class="feature-text">
+          Simply create an account, verify your identity, fund your wallet, and browse available projects. 
+          You can start with as little as $250.
         </p>
       </div>
       
-      <div class="features-grid">
-        <div class="feature-card" data-animate="animate-fadeInUp">
-          <h3 class="feature-title" style="font-size: 1.125rem;">How do I start investing?</h3>
-          <p class="feature-text">
-            Simply create an account, verify your identity, fund your wallet, and browse available projects. 
-            You can start with as little as $250.
-          </p>
-        </div>
-        
-        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
-          <h3 class="feature-title" style="font-size: 1.125rem;">What is the minimum investment?</h3>
-          <p class="feature-text">
-            Minimum investments vary by project, starting from $250 for agriculture projects and $2,000 for real estate.
-          </p>
-        </div>
-        
-        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
-          <h3 class="feature-title" style="font-size: 1.125rem;">How are returns paid?</h3>
-          <p class="feature-text">
-            Returns are credited directly to your wallet at the end of the investment period. 
-            You can withdraw or reinvest as you choose.
-          </p>
-        </div>
-        
-        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
-          <h3 class="feature-title" style="font-size: 1.125rem;">Is my investment secure?</h3>
-          <p class="feature-text">
-            All investments carry risk. We conduct thorough due diligence and structure investments 
-            with appropriate safeguards, but returns are not guaranteed.
-          </p>
-        </div>
-        
-        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.4s;">
-          <h3 class="feature-title" style="font-size: 1.125rem;">Can I withdraw early?</h3>
-          <p class="feature-text">
-            Investments are typically locked for the project duration. Early withdrawal may be possible 
-            in certain circumstances but is not guaranteed.
-          </p>
-        </div>
-        
-        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.5s;">
-          <h3 class="feature-title" style="font-size: 1.125rem;">What fees do you charge?</h3>
-          <p class="feature-text">
-            We charge a small management fee on returns (typically 5-10%). There are no hidden fees 
-            or charges for account maintenance.
-          </p>
-        </div>
+      <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
+        <h3 class="feature-title" style="font-size: 1.125rem;">What is the minimum investment?</h3>
+        <p class="feature-text">
+          Minimum investments vary by project, starting from $250 for agriculture projects and $2,000 for real estate.
+        </p>
       </div>
-    </div>
-  </section>
-
-  <!-- Disclaimer -->
-  <section class="section" style="padding: 2rem 0;">
-    <div class="container">
-      <div class="disclaimer">
-        <p class="disclaimer-text">
-          <strong>Important Notice:</strong> Returns are not guaranteed. All investments carry risk, including the potential loss of capital. 
-          Past performance does not guarantee future results. Please read our risk disclosure and consult with a financial advisor before investing.
+      
+      <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
+        <h3 class="feature-title" style="font-size: 1.125rem;">How are returns paid?</h3>
+        <p class="feature-text">
+          Returns are credited directly to your wallet at the end of the investment period. 
+          You can withdraw or reinvest as you choose.
+        </p>
+      </div>
+      
+      <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
+        <h3 class="feature-title" style="font-size: 1.125rem;">Is my investment secure?</h3>
+        <p class="feature-text">
+          All investments carry risk. We conduct thorough due diligence and structure investments 
+          with appropriate safeguards, but returns are not guaranteed.
+        </p>
+      </div>
+      
+      <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.4s;">
+        <h3 class="feature-title" style="font-size: 1.125rem;">Can I withdraw early?</h3>
+        <p class="feature-text">
+          Investments are typically locked for the project duration. Early withdrawal may be possible 
+          in certain circumstances but is not guaranteed.
+        </p>
+      </div>
+      
+      <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.5s;">
+        <h3 class="feature-title" style="font-size: 1.125rem;">What fees do you charge?</h3>
+        <p class="feature-text">
+          We charge a small management fee on returns (typically 5-10%). There are no hidden fees 
+          or charges for account maintenance.
         </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="logo">
-            <div class="logo-icon">🌿</div>
-            <span>TerraWealth</span>
-          </a>
-          <p class="footer-text">
-            TerraWealth Agro is a premium investment platform connecting investors with vetted agricultural and real estate opportunities.
-          </p>
-        </div>
-        
-        <div>
-          <h4 class="footer-title">Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="invest.html">Invest</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="footer-title">Account</h4>
-          <ul class="footer-links">
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html">Sign Up</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="wallet.html">Wallet</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="footer-title">Legal</h4>
-          <ul class="footer-links">
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Risk Disclosure</a></li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p class="footer-copyright">
-          © 2024 TerraWealth Agro. All rights reserved. 
-          <br>
-          <small>Returns are not guaranteed. All investments carry risk.</small>
+<!-- Disclaimer -->
+<section class="section" style="padding: 2rem 0;">
+  <div class="container">
+    <div class="disclaimer">
+      <p class="disclaimer-text">
+        <strong>Important Notice:</strong> Returns are not guaranteed. All investments carry risk, including the potential loss of capital. 
+        Past performance does not guarantee future results. Please read our risk disclosure and consult with a financial advisor before investing.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GLASSMORPHIC FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+        <p class="footer-text">
+          TerraWealth Agro is a premium investment platform connecting investors with vetted agricultural and real estate opportunities.
         </p>
       </div>
+      
+      <div>
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="invest.html">Invest</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="footer-title">Account</h4>
+        <ul class="footer-links">
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="footer-title">Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Risk Disclosure</a></li>
+        </ul>
+      </div>
     </div>
-  </footer>
+    
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        © 2024 TerraWealth Agro. All rights reserved. 
+        <br>
+        <small>Returns are not guaranteed. All investments carry risk.</small>
+      </p>
+    </div>
+  </div>
+</footer>
 
-  <!-- Scripts -->
-  <script src="js/auth.js"></script>
-  <script src="js/wallet.js"></script>
-  <script src="js/projects.js"></script>
-  <script src="js/investment.js"></script>
-  <script src="js/main.js"></script>
-  
-  <script>
-    // Contact form handling
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value;
-      
-      // Validate
-      if (!name || !email || !subject || !message) {
-        Toast.error('Please fill in all fields.');
-        return;
+<!-- Scripts -->
+<script src="js/auth.js"></script>
+<script src="js/wallet.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/investment.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  (function() {
+    // Hide preloader after load
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if(preloader) {
+        preloader.classList.add('hide-preloader');
+        setTimeout(() => preloader.style.display = 'none', 700);
       }
-      
-      if (!Validation.email(email)) {
-        Toast.error('Please enter a valid email address.');
-        return;
-      }
-      
-      // Simulate form submission
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span>';
-      
-      setTimeout(() => {
-        Toast.success('Thank you for your message! We will get back to you within 24 hours.');
-        this.reset();
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }, 1500);
     });
-  </script>
+
+    // Mobile menu toggle (world-class hamburger)
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileOverlay = document.getElementById('mobileMenuOverlay');
+    const closeMenuBtn = document.getElementById('closeMobileMenu');
+    const menuLinks = document.querySelectorAll('#mobileMenuOverlay .nav-links a');
+    function openMenu() { mobileOverlay.classList.add('active'); document.body.classList.add('menu-open'); }
+    function closeMenu() { mobileOverlay.classList.remove('active'); document.body.classList.remove('menu-open'); }
+    if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+    menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileOverlay.classList.contains('active')) closeMenu(); });
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 20) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // Intersection Observer for animations
+    const animateElements = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInUp');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    animateElements.forEach(el => observer.observe(el));
+
+    // auth/dashboard visibility mock
+    function getCurrentUser() { return localStorage.getItem('terrawealth_user'); }
+    function updateNavAuth() {
+      const user = getCurrentUser();
+      document.querySelectorAll('.auth-link').forEach(link => { if(link) link.style.display = user ? 'none' : 'inline-flex'; });
+      document.querySelectorAll('.dashboard-link').forEach(link => { if(link) link.style.display = user ? 'inline-flex' : 'none'; });
+    }
+    updateNavAuth();
+
+    // Contact form handling
+    const form = document.getElementById('contact-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        if (!name || !email || !subject || !message) {
+          Toast.error('Please fill in all fields.');
+          return;
+        }
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          Toast.error('Please enter a valid email address.');
+          return;
+        }
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span>';
+        setTimeout(() => {
+          Toast.success('Thank you for your message! We will get back to you within 24 hours.');
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }, 1500);
+      });
+    }
+  })();
+</script>
 </body>
 </html>
