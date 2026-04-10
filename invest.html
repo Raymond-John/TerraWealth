@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invest - TerraWealth Agro</title>
+  <meta name="description" content="Explore vetted agricultural and real estate investment opportunities on TerraWealth Agro.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="invest.html" class="active">
+            <span>📈</span>
+            <span>Invest</span>
+          </a></li>
+          <li><a href="wallet.html">
+            <span>💳</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="updates.html">
+            <span>📰</span>
+            <span>Updates</span>
+          </a></li>
+          <li><a href="profile.html">
+            <span>👤</span>
+            <span>Profile</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
+          <span>🚪</span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Investment Opportunities</h1>
+          <p class="dashboard-subtitle">Browse and invest in vetted agricultural and real estate projects</p>
+        </div>
+        <div class="user-menu">
+          <div class="user-avatar" id="header-avatar">U</div>
+        </div>
+      </div>
+      
+      <!-- Wallet Summary -->
+      <div class="wallet-balance-card" style="margin-bottom: 2rem;">
+        <div class="wallet-balance-label">Available Balance</div>
+        <div class="wallet-balance-value" id="wallet-balance">$0.00</div>
+        <div class="wallet-actions">
+          <a href="wallet.html" class="btn btn-gold">+ Fund Wallet</a>
+        </div>
+      </div>
+      
+      <!-- Filters -->
+      <div style="margin-bottom: 1.5rem;">
+        <!-- Search -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Search projects by name, location, or type...">
+        </div>
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All Projects</button>
+          <button class="filter-tab" data-filter="agriculture">🌱 Agriculture</button>
+          <button class="filter-tab" data-filter="real-estate">🏘️ Real Estate</button>
+        </div>
+        
+        <!-- Risk Filter -->
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.875rem; color: var(--text-light); padding: 0.625rem 0;">Risk Level:</span>
+          <button class="filter-tab active" data-risk="all">All</button>
+          <button class="filter-tab" data-risk="low">Low</button>
+          <button class="filter-tab" data-risk="medium">Medium</button>
+          <button class="filter-tab" data-risk="high">High</button>
+        </div>
+      </div>
+      
+      <!-- Projects Grid -->
+      <div class="projects-grid" id="projects-list">
+        <!-- Projects will be rendered here -->
+      </div>
+      
+      <!-- Empty State (hidden by default) -->
+      <div id="no-projects" class="empty-state" style="display: none;">
+        <div class="empty-icon">🔍</div>
+        <h3 class="empty-title">No Projects Found</h3>
+        <p class="empty-text">Try adjusting your search or filter criteria.</p>
+        <button onclick="resetFilters()" class="btn btn-primary">Reset Filters</button>
+      </div>
+      
+      <!-- Disclaimer -->
+      <div class="disclaimer" style="margin-top: 2rem;">
+        <p class="disclaimer-text">
+          <strong>Important:</strong> Returns are not guaranteed. All investments carry risk, including the potential loss of capital. 
+          Past performance does not guarantee future results. Please review each project's risk disclosure before investing.
+        </p>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Investment Modal -->
+  <div class="modal-overlay" id="invest-modal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Invest in Project</h3>
+        <button class="modal-close" onclick="closeInvestModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-project-info" style="margin-bottom: 1.5rem;">
+          <!-- Project info will be inserted here -->
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="invest-amount">Investment Amount ($)</label>
+          <input type="number" id="invest-amount" class="form-input" placeholder="Enter amount" min="250">
+          <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem;">
+            Min: <span id="modal-min-amount">$250</span> | 
+            Available: <span id="modal-wallet-balance">$0</span>
+          </p>
+        </div>
+        <div class="disclaimer" style="margin: 0;">
+          <p class="disclaimer-text" style="font-size: 0.8rem;">
+            By investing, you acknowledge that returns are not guaranteed and this investment carries risk.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeInvestModal()">Cancel</button>
+        <button class="btn btn-primary" id="confirm-invest-btn" onclick="confirmInvestment()">Confirm Investment</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Project Details Modal -->
+  <div class="modal-overlay" id="details-modal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="details-title">Project Details</h3>
+        <button class="modal-close" onclick="closeDetailsModal()">×</button>
+      </div>
+      <div class="modal-body" id="details-content">
+        <!-- Project details will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDetailsModal()">Close</button>
+        <button class="btn btn-primary" id="details-invest-btn">Invest Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Check authentication
+    const currentUser = requireAuth();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+    
+    // Update header
+    document.getElementById('header-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('wallet-balance').textContent = Format.currency(currentUser.walletBalance || 0);
+    
+    // Current filter state
+    let currentFilter = 'all';
+    let currentRisk = 'all';
+    let searchQuery = '';
+    let selectedProject = null;
+    
+    // Render projects
+    function renderProjects() {
+      const container = document.getElementById('projects-list');
+      const noProjects = document.getElementById('no-projects');
+      
+      let projects = getProjects();
+      
+      // Apply type filter
+      if (currentFilter !== 'all') {
+        projects = projects.filter(p => p.type === currentFilter);
+      }
+      
+      // Apply risk filter
+      if (currentRisk !== 'all') {
+        projects = projects.filter(p => p.riskLevel === currentRisk);
+      }
+      
+      // Apply search
+      if (searchQuery) {
+        const lowerQuery = searchQuery.toLowerCase();
+        projects = projects.filter(p => 
+          p.name.toLowerCase().includes(lowerQuery) ||
+          p.description.toLowerCase().includes(lowerQuery) ||
+          p.location.toLowerCase().includes(lowerQuery)
+        );
+      }
+      
+      if (projects.length === 0) {
+        container.innerHTML = '';
+        noProjects.style.display = 'block';
+        return;
+      }
+      
+      noProjects.style.display = 'none';
+      
+      container.innerHTML = projects.map(project => {
+        const progress = getProjectProgress(project);
+        const typeIcon = project.type === 'agriculture' ? '🌱' : '🏘️';
+        const typeLabel = project.type === 'agriculture' ? 'Agriculture' : 'Real Estate';
+        
+        return `
+          <div class="project-card" data-animate="animate-fadeInUp">
+            <div class="project-image">
+              <span style="font-size: 4rem;">${project.images[0]}</span>
+              <span class="project-badge">${typeIcon} ${typeLabel}</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">${project.name}</h3>
+              <p class="project-description">${project.shortDescription}</p>
+              
+              <div class="project-details">
+                <div class="project-detail">
+                  <div class="project-detail-label">Duration</div>
+                  <div class="project-detail-value">${project.duration}</div>
+                </div>
+                <div class="project-detail">
+                  <div class="project-detail-label">Return</div>
+                  <div class="project-detail-value" style="color: var(--success);">${project.returnRange.min}-${project.returnRange.max}%</div>
+                </div>
+                <div class="project-detail">
+                  <div class="project-detail-label">Min Invest</div>
+                  <div class="project-detail-value">${Format.currency(project.minInvestment)}</div>
+                </div>
+              </div>
+              
+              <div class="investment-progress" style="margin-bottom: 1rem;">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${progress}%"></div>
+                </div>
+                <div class="progress-text">
+                  <span>${progress}% funded</span>
+                  <span>${project.investors} investors</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="showProjectDetails('${project.id}')">
+                  View Details
+                </button>
+                <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="openInvestModal('${project.id}')">
+                  Invest Now
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // Filter tab click handlers
+    document.querySelectorAll('[data-filter]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentFilter = tab.dataset.filter;
+        renderProjects();
+      });
+    });
+    
+    // Risk filter click handlers
+    document.querySelectorAll('[data-risk]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-risk]').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentRisk = tab.dataset.risk;
+        renderProjects();
+      });
+    });
+    
+    // Search input handler
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderProjects();
+    });
+    
+    // Reset filters
+    function resetFilters() {
+      currentFilter = 'all';
+      currentRisk = 'all';
+      searchQuery = '';
+      document.getElementById('search-input').value = '';
+      document.querySelectorAll('[data-filter], [data-risk]').forEach(t => t.classList.remove('active'));
+      document.querySelector('[data-filter="all"]').classList.add('active');
+      document.querySelector('[data-risk="all"]').classList.add('active');
+      renderProjects();
+    }
+    
+    // Open invest modal
+    function openInvestModal(projectId) {
+      const project = getProjectById(projectId);
+      if (!project) return;
+      
+      selectedProject = project;
+      
+      document.getElementById('modal-project-info').innerHTML = `
+        <h4 style="margin-bottom: 0.5rem;">${project.name}</h4>
+        <p style="color: var(--text-light); font-size: 0.875rem;">${project.shortDescription}</p>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <span class="risk-badge ${project.riskLevel}">${project.riskLevel} Risk</span>
+          <span style="font-size: 0.875rem; color: var(--success); font-weight: 600;">
+            ${project.returnRange.min}-${project.returnRange.max}% Returns
+          </span>
+        </div>
+      `;
+      
+      document.getElementById('modal-min-amount').textContent = Format.currency(project.minInvestment);
+      document.getElementById('modal-wallet-balance').textContent = Format.currency(currentUser.walletBalance || 0);
+      document.getElementById('invest-amount').value = '';
+      document.getElementById('invest-amount').min = project.minInvestment;
+      
+      document.getElementById('invest-modal').classList.add('active');
+    }
+    
+    // Close invest modal
+    function closeInvestModal() {
+      document.getElementById('invest-modal').classList.remove('active');
+      selectedProject = null;
+    }
+    
+    // Confirm investment
+    function confirmInvestment() {
+      if (!selectedProject) return;
+      
+      const amount = parseFloat(document.getElementById('invest-amount').value);
+      
+      if (!amount || amount < selectedProject.minInvestment) {
+        Toast.error(`Minimum investment is ${Format.currency(selectedProject.minInvestment)}`);
+        return;
+      }
+      
+      if (amount > (currentUser.walletBalance || 0)) {
+        Toast.error('Insufficient wallet balance. Please fund your wallet.');
+        return;
+      }
+      
+      const result = investFromWallet(currentUser.id, selectedProject.id, amount);
+      
+      if (result.success) {
+        Toast.success(result.message);
+        closeInvestModal();
+        
+        // Update wallet display
+        const updatedUser = getCurrentUser();
+        document.getElementById('wallet-balance').textContent = Format.currency(updatedUser.walletBalance || 0);
+        
+        // Refresh projects
+        renderProjects();
+      } else {
+        Toast.error(result.message);
+      }
+    }
+    
+    // Show project details
+    function showProjectDetails(projectId) {
+      const project = getProjectById(projectId);
+      if (!project) return;
+      
+      selectedProject = project;
+      const progress = getProjectProgress(project);
+      const typeIcon = project.type === 'agriculture' ? '🌱' : '🏘️';
+      
+      document.getElementById('details-title').textContent = project.name;
+      document.getElementById('details-content').innerHTML = `
+        <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, var(--deep-green) 0%, var(--deep-green-light) 100%); border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+          <span style="font-size: 5rem;">${project.images[0]}</span>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <span class="project-badge" style="margin-right: 0.5rem;">${typeIcon} ${project.type === 'agriculture' ? 'Agriculture' : 'Real Estate'}</span>
+          <span class="risk-badge ${project.riskLevel}">${project.riskLevel} Risk</span>
+        </div>
+        
+        <p style="line-height: 1.7; margin-bottom: 1.5rem;">${project.description}</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+          <div style="padding: 1rem; background: var(--off-white); border-radius: var(--radius-md);">
+            <div style="font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Location</div>
+            <div style="font-weight: 600;">${project.location}</div>
+          </div>
+          <div style="padding: 1rem; background: var(--off-white); border-radius: var(--radius-md);">
+            <div style="font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Duration</div>
+            <div style="font-weight: 600;">${project.duration}</div>
+          </div>
+          <div style="padding: 1rem; background: var(--off-white); border-radius: var(--radius-md);">
+            <div style="font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Return Range</div>
+            <div style="font-weight: 600; color: var(--success);">${project.returnRange.min}-${project.returnRange.max}%</div>
+          </div>
+          <div style="padding: 1rem; background: var(--off-white); border-radius: var(--radius-md);">
+            <div style="font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 0.25rem;">Min Investment</div>
+            <div style="font-weight: 600;">${Format.currency(project.minInvestment)}</div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <div style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 0.5rem;">Funding Progress</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${progress}%"></div>
+          </div>
+          <div class="progress-text">
+            <span>${Format.currency(project.funded)} raised</span>
+            <span>Target: ${Format.currency(project.target)}</span>
+          </div>
+        </div>
+        
+        <div class="disclaimer">
+          <p class="disclaimer-text" style="font-size: 0.8rem;">
+            <strong>Risk Disclaimer:</strong> Returns are not guaranteed. This investment carries ${project.riskLevel} risk. 
+            Please read the full risk disclosure before investing.
+          </p>
+        </div>
+      `;
+      
+      document.getElementById('details-invest-btn').onclick = () => {
+        closeDetailsModal();
+        openInvestModal(projectId);
+      };
+      
+      document.getElementById('details-modal').classList.add('active');
+    }
+    
+    // Close details modal
+    function closeDetailsModal() {
+      document.getElementById('details-modal').classList.remove('active');
+    }
+    
+    // Handle logout
+    function handleLogout() {
+      logoutUser();
+      Toast.success('You have been logged out successfully.');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+    
+    // Initial render
+    renderProjects();
+    
+    // Check URL params for filter
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeFilter = urlParams.get('type');
+    if (typeFilter) {
+      document.querySelectorAll('[data-filter]').forEach(t => t.classList.remove('active'));
+      const tab = document.querySelector(`[data-filter="${typeFilter}"]`);
+      if (tab) {
+        tab.classList.add('active');
+        currentFilter = typeFilter;
+        renderProjects();
+      }
+    }
+  </script>
+</body>
+</html>

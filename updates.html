@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Updates - TerraWealth Agro</title>
+  <meta name="description" content="Stay updated with the latest news and progress from your investments on TerraWealth Agro.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="invest.html">
+            <span>📈</span>
+            <span>Invest</span>
+          </a></li>
+          <li><a href="wallet.html">
+            <span>💳</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="updates.html" class="active">
+            <span>📰</span>
+            <span>Updates</span>
+          </a></li>
+          <li><a href="profile.html">
+            <span>👤</span>
+            <span>Profile</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
+          <span>🚪</span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Project Updates</h1>
+          <p class="dashboard-subtitle">Stay informed about your investments</p>
+        </div>
+        <div class="user-menu">
+          <div class="user-avatar" id="header-avatar">U</div>
+        </div>
+      </div>
+      
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" style="margin-bottom: 2rem;">
+        <button class="filter-tab active" data-update-filter="all">All Updates</button>
+        <button class="filter-tab" data-update-filter="my-investments">My Investments</button>
+        <button class="filter-tab" data-update-filter="agriculture">Agriculture</button>
+        <button class="filter-tab" data-update-filter="real-estate">Real Estate</button>
+      </div>
+      
+      <!-- Updates Timeline -->
+      <div class="timeline" id="updates-timeline">
+        <!-- Updates will be rendered here -->
+      </div>
+      
+      <!-- Empty State (hidden by default) -->
+      <div id="no-updates" class="empty-state" style="display: none;">
+        <div class="empty-icon">📰</div>
+        <h3 class="empty-title">No Updates Found</h3>
+        <p class="empty-text">Check back later for the latest project updates.</p>
+      </div>
+      
+      <!-- Disclaimer -->
+      <div class="disclaimer" style="margin-top: 2rem;">
+        <p class="disclaimer-text">
+          <strong>Important:</strong> Project updates are provided for informational purposes only. 
+          Past performance and progress do not guarantee future results.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Check authentication
+    const currentUser = requireAuth();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+    
+    // Update header
+    document.getElementById('header-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+    
+    let updateFilter = 'all';
+    
+    // Get all updates from all projects
+    function getAllUpdates() {
+      const projects = getProjects();
+      let allUpdates = [];
+      
+      projects.forEach(project => {
+        if (project.updates && project.updates.length > 0) {
+          project.updates.forEach(update => {
+            allUpdates.push({
+              ...update,
+              projectId: project.id,
+              projectName: project.name,
+              projectType: project.type
+            });
+          });
+        }
+      });
+      
+      // Sort by date (newest first)
+      return allUpdates.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+    
+    // Get user's invested project IDs
+    function getUserInvestedProjectIds() {
+      const investments = getUserInvestments(currentUser.id);
+      return [...new Set(investments.map(inv => inv.projectId))];
+    }
+    
+    // Render updates
+    function renderUpdates() {
+      const container = document.getElementById('updates-timeline');
+      const noUpdates = document.getElementById('no-updates');
+      
+      let updates = getAllUpdates();
+      
+      // Apply filter
+      if (updateFilter === 'my-investments') {
+        const investedProjectIds = getUserInvestedProjectIds();
+        updates = updates.filter(u => investedProjectIds.includes(u.projectId));
+      } else if (updateFilter === 'agriculture') {
+        updates = updates.filter(u => u.projectType === 'agriculture');
+      } else if (updateFilter === 'real-estate') {
+        updates = updates.filter(u => u.projectType === 'real-estate');
+      }
+      
+      if (updates.length === 0) {
+        container.innerHTML = '';
+        noUpdates.style.display = 'block';
+        return;
+      }
+      
+      noUpdates.style.display = 'none';
+      
+      const typeIcons = {
+        agriculture: '🌱',
+        'real-estate': '🏘️'
+      };
+      
+      container.innerHTML = updates.map((update, index) => `
+        <div class="timeline-item" data-animate="animate-fadeInUp" style="animation-delay: ${index * 0.1}s;">
+          <div class="timeline-date">${Format.date(update.date)}</div>
+          <div class="timeline-content">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span>${typeIcons[update.projectType]}</span>
+              <span style="font-size: 0.875rem; color: var(--deep-green); font-weight: 600;">${update.projectName}</span>
+            </div>
+            <h4 class="timeline-title">${update.title}</h4>
+            <p class="timeline-text">${update.content}</p>
+            ${update.image ? `
+              <div class="timeline-media">
+                <img src="${update.image}" alt="${update.title}" style="width: 100%; border-radius: var(--radius-md);">
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // Filter handlers
+    document.querySelectorAll('[data-update-filter]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-update-filter]').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        updateFilter = tab.dataset.updateFilter;
+        renderUpdates();
+      });
+    });
+    
+    // Handle logout
+    function handleLogout() {
+      logoutUser();
+      Toast.success('You have been logged out successfully.');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+    
+    // Initial render
+    renderUpdates();
+  </script>
+</body>
+</html>

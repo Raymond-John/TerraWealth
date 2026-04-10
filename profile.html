@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - TerraWealth Agro</title>
+  <meta name="description" content="Manage your TerraWealth Agro profile and account settings.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="invest.html">
+            <span>📈</span>
+            <span>Invest</span>
+          </a></li>
+          <li><a href="wallet.html">
+            <span>💳</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="updates.html">
+            <span>📰</span>
+            <span>Updates</span>
+          </a></li>
+          <li><a href="profile.html" class="active">
+            <span>👤</span>
+            <span>Profile</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
+          <span>🚪</span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">My Profile</h1>
+          <p class="dashboard-subtitle">Manage your account settings and preferences</p>
+        </div>
+        <div class="user-menu">
+          <div class="user-avatar" id="header-avatar">U</div>
+        </div>
+      </div>
+      
+      <!-- Profile Card -->
+      <div class="profile-card" style="margin-bottom: 2rem;">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profile-avatar">U</div>
+          <h2 class="profile-name" id="profile-name">User Name</h2>
+          <p class="profile-email" id="profile-email">user@example.com</p>
+          <p style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.875rem;">Member since <span id="member-since">2024</span></p>
+        </div>
+        
+        <div class="profile-body">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Edit Profile</h3>
+          
+          <form id="profile-form">
+            <div class="grid grid-cols-2 md:grid-cols-1" style="gap: 1.5rem;">
+              <div class="form-group">
+                <label class="form-label" for="edit-name">Full Name</label>
+                <input type="text" id="edit-name" name="name" class="form-input" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="edit-email">Email Address</label>
+                <input type="email" id="edit-email" name="email" class="form-input" disabled style="background: var(--light-gray);">
+                <p class="form-error" style="color: var(--text-light); font-size: 0.75rem;">Email cannot be changed</p>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="edit-phone">Phone Number</label>
+                <input type="tel" id="edit-phone" name="phone" class="form-input" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="edit-location">Location (Optional)</label>
+                <input type="text" id="edit-location" name="location" class="form-input" placeholder="City, Country">
+              </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Change Password -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-body">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Change Password</h3>
+          
+          <form id="password-form">
+            <div class="grid grid-cols-2 md:grid-cols-1" style="gap: 1.5rem;">
+              <div class="form-group">
+                <label class="form-label" for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current-password" class="form-input" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new-password" class="form-input" required>
+                <p class="form-error" id="new-password-error" style="display: none;">Password must be at least 6 characters</p>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="confirm-new-password">Confirm New Password</label>
+                <input type="password" id="confirm-new-password" name="confirm-new-password" class="form-input" required>
+                <p class="form-error" id="confirm-new-error" style="display: none;">Passwords do not match</p>
+              </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+              <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Account Stats -->
+      <div class="stats-grid" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <div class="stat-label">Total Investments</div>
+          <div class="stat-value" id="profile-total-investments">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Invested</div>
+          <div class="stat-value" id="profile-total-invested">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Wallet Balance</div>
+          <div class="stat-value" id="profile-wallet-balance">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Account Status</div>
+          <div class="stat-value" style="color: var(--success);">Active</div>
+        </div>
+      </div>
+      
+      <!-- Danger Zone -->
+      <div class="card" style="border: 2px solid var(--danger);">
+        <div class="card-body">
+          <h3 style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--danger);">⚠️ Danger Zone</h3>
+          <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+            Once you delete your account, there is no going back. Please be certain.
+          </p>
+          <button class="btn btn-secondary" onclick="showDeleteAccountModal()" style="border-color: var(--danger); color: var(--danger);">
+            Delete Account
+          </button>
+        </div>
+      </div>
+      
+      <!-- Disclaimer -->
+      <div class="disclaimer" style="margin-top: 2rem;">
+        <p class="disclaimer-text">
+          <strong>Important:</strong> Your personal information is secure and will never be shared with third parties without your consent.
+        </p>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Delete Account Modal -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--danger);">Delete Account</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1rem;">
+          Are you sure you want to delete your account? This action cannot be undone.
+        </p>
+        <div class="disclaimer" style="margin: 0; background: rgba(239, 68, 68, 0.1); border-color: var(--danger);">
+          <p class="disclaimer-text" style="font-size: 0.875rem;">
+            All your data, including investments and transaction history, will be permanently deleted.
+          </p>
+        </div>
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label class="form-label" for="delete-confirm">Type "DELETE" to confirm</label>
+          <input type="text" id="delete-confirm" class="form-input" placeholder="DELETE">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-primary" id="confirm-delete-btn" onclick="confirmDeleteAccount()" style="background: var(--danger);">
+          Delete Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Check authentication
+    const currentUser = requireAuth();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+    
+    // Load profile data
+    function loadProfile() {
+      const user = getCurrentUser();
+      
+      // Update header
+      document.getElementById('header-avatar').textContent = user.name.charAt(0).toUpperCase();
+      
+      // Update profile header
+      document.getElementById('profile-avatar').textContent = user.name.charAt(0).toUpperCase();
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-email').textContent = user.email;
+      
+      // Member since
+      const createdDate = new Date(user.createdAt);
+      document.getElementById('member-since').textContent = createdDate.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long' 
+      });
+      
+      // Fill form
+      document.getElementById('edit-name').value = user.name;
+      document.getElementById('edit-email').value = user.email;
+      document.getElementById('edit-phone').value = user.phone || '';
+      document.getElementById('edit-location').value = user.location || '';
+      
+      // Update stats
+      const portfolio = getPortfolioSummary(user.id);
+      document.getElementById('profile-total-investments').textContent = portfolio.totalCount;
+      document.getElementById('profile-total-invested').textContent = Format.currency(portfolio.totalInvested);
+      document.getElementById('profile-wallet-balance').textContent = Format.currency(user.walletBalance || 0);
+    }
+    
+    // Profile form submission
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('edit-name').value.trim();
+      const phone = document.getElementById('edit-phone').value.trim();
+      const location = document.getElementById('edit-location').value.trim();
+      
+      if (!name || !phone) {
+        Toast.error('Please fill in all required fields.');
+        return;
+      }
+      
+      const result = updateUserProfile({ name, phone, location });
+      
+      if (result.success) {
+        Toast.success('Profile updated successfully!');
+        loadProfile();
+      } else {
+        Toast.error(result.message);
+      }
+    });
+    
+    // Password form submission
+    document.getElementById('password-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Reset errors
+      document.getElementById('new-password-error').style.display = 'none';
+      document.getElementById('confirm-new-error').style.display = 'none';
+      
+      const currentPassword = document.getElementById('current-password').value;
+      const newPassword = document.getElementById('new-password').value;
+      const confirmNewPassword = document.getElementById('confirm-new-password').value;
+      
+      // Get user to verify current password
+      const users = getUsers();
+      const user = users.find(u => u.id === currentUser.id);
+      
+      if (!user || user.password !== currentPassword) {
+        Toast.error('Current password is incorrect.');
+        return;
+      }
+      
+      if (!Validation.password(newPassword)) {
+        document.getElementById('new-password-error').style.display = 'block';
+        return;
+      }
+      
+      if (newPassword !== confirmNewPassword) {
+        document.getElementById('confirm-new-error').style.display = 'block';
+        return;
+      }
+      
+      // Update password
+      const result = updateUserProfile({ password: newPassword });
+      
+      if (result.success) {
+        Toast.success('Password updated successfully!');
+        this.reset();
+      } else {
+        Toast.error(result.message);
+      }
+    });
+    
+    // Delete account modal
+    function showDeleteAccountModal() {
+      document.getElementById('delete-confirm').value = '';
+      document.getElementById('delete-modal').classList.add('active');
+    }
+    
+    function closeDeleteModal() {
+      document.getElementById('delete-modal').classList.remove('active');
+    }
+    
+    function confirmDeleteAccount() {
+      const confirmText = document.getElementById('delete-confirm').value;
+      
+      if (confirmText !== 'DELETE') {
+        Toast.error('Please type "DELETE" to confirm.');
+        return;
+      }
+      
+      // Delete user data
+      const users = getUsers();
+      const updatedUsers = users.filter(u => u.id !== currentUser.id);
+      saveUsers(updatedUsers);
+      
+      // Delete user investments
+      const investments = getInvestments();
+      const updatedInvestments = investments.filter(inv => inv.userId !== currentUser.id);
+      saveInvestments(updatedInvestments);
+      
+      // Delete user transactions
+      const transactions = getTransactions();
+      const updatedTransactions = transactions.filter(txn => txn.userId !== currentUser.id);
+      saveTransactions(updatedTransactions);
+      
+      // Logout
+      logoutUser();
+      
+      Toast.success('Your account has been deleted.');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+    
+    // Handle logout
+    function handleLogout() {
+      logoutUser();
+      Toast.success('You have been logged out successfully.');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+    
+    // Initial load
+    loadProfile();
+  </script>
+</body>
+</html>

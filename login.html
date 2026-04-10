@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - TerraWealth Agro</title>
+  <meta name="description" content="Login to your TerraWealth Agro account to access your dashboard and investments.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Auth Page -->
+  <div class="auth-page">
+    <div class="auth-container">
+      <div class="auth-card" data-animate="animate-fadeInUp">
+        <div class="auth-header">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🌿</div>
+            <span>TerraWealth</span>
+          </a>
+          <h1 class="auth-title">Welcome Back</h1>
+          <p class="auth-subtitle">Login to access your dashboard and investments</p>
+        </div>
+        
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+          </div>
+          
+          <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" id="remember" style="width: 18px; height: 18px;">
+              <span style="font-size: 0.875rem; color: var(--text-light);">Remember me</span>
+            </label>
+            <a href="#" style="font-size: 0.875rem; color: var(--deep-green); font-weight: 600;">Forgot password?</a>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1rem;">
+            <span>Login</span>
+            <span>→</span>
+          </button>
+        </form>
+        
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray); text-align: center;">
+          <a href="index.html" style="font-size: 0.875rem; color: var(--text-light);">← Back to Home</a>
+        </div>
+      </div>
+      
+      <p style="text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.7); font-size: 0.875rem;">
+        <small>Returns are not guaranteed. All investments carry risk.</small>
+      </p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Check if already logged in
+    const currentUser = getCurrentUser();
+    if (currentUser) {
+      // Redirect to dashboard
+      window.location.href = 'dashboard.html';
+    }
+    
+    // Login form handling
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      
+      // Validate
+      if (!email || !password) {
+        Toast.error('Please enter both email and password.');
+        return;
+      }
+      
+      if (!Validation.email(email)) {
+        Toast.error('Please enter a valid email address.');
+        return;
+      }
+      
+      // Show loading
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> Logging in...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        const result = loginUser(email, password);
+        
+        if (result.success) {
+          Toast.success(result.message);
+          
+          // Get redirect URL if any
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect');
+          
+          setTimeout(() => {
+            window.location.href = redirect || 'dashboard.html';
+          }, 1000);
+        } else {
+          Toast.error(result.message);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

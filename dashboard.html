@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - TerraWealth Agro</title>
+  <meta name="description" content="Your TerraWealth Agro dashboard. Track your investments, portfolio growth, and returns.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html" class="active">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="invest.html">
+            <span>📈</span>
+            <span>Invest</span>
+          </a></li>
+          <li><a href="wallet.html">
+            <span>💳</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="updates.html">
+            <span>📰</span>
+            <span>Updates</span>
+          </a></li>
+          <li><a href="profile.html">
+            <span>👤</span>
+            <span>Profile</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
+          <span>🚪</span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Welcome back, <span id="welcome-name">Investor</span>! 👋</h1>
+          <p class="dashboard-subtitle">Here's an overview of your portfolio</p>
+        </div>
+        <div class="user-menu">
+          <a href="wallet.html" class="btn btn-primary btn-sm">+ Fund Wallet</a>
+          <div class="user-avatar" id="header-avatar">U</div>
+        </div>
+      </div>
+      
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Wallet Balance</div>
+          <div class="stat-value" id="wallet-balance">$0.00</div>
+          <div class="stat-change positive">
+            <span>Available for investment</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-label">Total Invested</div>
+          <div class="stat-value" id="total-invested">$0.00</div>
+          <div class="stat-change positive">
+            <span>Across all projects</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-label">Estimated Returns</div>
+          <div class="stat-value" id="estimated-returns" style="color: var(--success);">$0.00</div>
+          <div class="stat-change positive">
+            <span>Projected at maturity</span>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-label">Active Investments</div>
+          <div class="stat-value" id="active-investments">0</div>
+          <div class="stat-change positive">
+            <span>Currently running</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Charts Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-1" style="gap: 1.5rem; margin-bottom: 2rem;">
+        <!-- Portfolio Growth Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">Portfolio Growth</h3>
+          </div>
+          <div style="height: 300px;">
+            <canvas id="portfolio-growth-chart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Asset Allocation Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">Asset Allocation</h3>
+          </div>
+          <div style="height: 300px;">
+            <canvas id="asset-allocation-chart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Returns Projection -->
+      <div class="chart-container" style="margin-bottom: 2rem;">
+        <div class="chart-header">
+          <h3 class="chart-title">Returns Projection (Next 6 Months)</h3>
+        </div>
+        <div style="height: 250px;">
+          <canvas id="returns-projection-chart"></canvas>
+        </div>
+      </div>
+      
+      <!-- Active Investments -->
+      <div style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 700;">Active Investments</h3>
+          <a href="invest.html" class="btn btn-primary btn-sm">Invest More</a>
+        </div>
+        <div class="investments-grid" id="active-investments-list">
+          <!-- Investments will be rendered here -->
+        </div>
+      </div>
+      
+      <!-- Recent Transactions -->
+      <div class="transactions-list">
+        <div class="transactions-header">
+          <h3 class="transactions-title">Recent Transactions</h3>
+          <a href="wallet.html" style="font-size: 0.875rem; color: var(--deep-green); font-weight: 600;">View All</a>
+        </div>
+        <div id="recent-transactions-list">
+          <!-- Transactions will be rendered here -->
+        </div>
+      </div>
+      
+      <!-- Disclaimer -->
+      <div class="disclaimer" style="margin-top: 2rem;">
+        <p class="disclaimer-text">
+          <strong>Important:</strong> Returns are not guaranteed. All investments carry risk, including the potential loss of capital. 
+          Past performance does not guarantee future results.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - TerraWealth Agro</title>
+  <meta name="description" content="Get in touch with TerraWealth Agro. We're here to help with your investment questions.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🌿</div>
+        <span>TerraWealth</span>
+      </a>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      
+      <div class="nav-auth">
+        <a href="login.html" class="btn btn-secondary btn-sm auth-link">Login</a>
+        <a href="signup.html" class="btn btn-primary btn-sm auth-link">Get Started</a>
+        <a href="dashboard.html" class="btn btn-primary btn-sm dashboard-link" style="display: none;">Dashboard</a>
+      </div>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header" style="padding-top: 120px;">
+    <div class="container">
+      <h1 class="page-title">Contact Us</h1>
+      <p class="page-subtitle">We're here to help with your investment journey</p>
+    </div>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Info -->
+        <div class="contact-info">
+          <div class="contact-item" data-animate="animate-fadeInUp">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h4>Office Address</h4>
+              <p>123 Investment Tower, Victoria Island<br>Lagos, Nigeria</p>
+            </div>
+          </div>
+          
+          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
+            <div class="contact-icon">📧</div>
+            <div>
+              <h4>Email</h4>
+              <p>support@terrawealthagro.com<br>investments@terrawealthagro.com</p>
+            </div>
+          </div>
+          
+          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
+            <div class="contact-icon">📞</div>
+            <div>
+              <h4>Phone</h4>
+              <p>+234 800 123 4567<br>+234 800 987 6543</p>
+            </div>
+          </div>
+          
+          <div class="contact-item" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <h4>Business Hours</h4>
+              <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="contact-form-card" data-animate="animate-fadeInUp" style="animation-delay: 0.15s;">
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Send Us a Message</h3>
+          <form id="contact-form">
+            <div class="form-group">
+              <label class="form-label" for="name">Full Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="subject">Subject</label>
+              <select id="subject" name="subject" class="form-select" required>
+                <option value="">Select a subject</option>
+                <option value="general">General Inquiry</option>
+                <option value="investment">Investment Question</option>
+                <option value="support">Account Support</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-full">
+              <span>Send Message</span>
+              <span>→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" style="background: var(--light-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">
+          Find answers to common questions about investing with TerraWealth Agro.
+        </p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card" data-animate="animate-fadeInUp">
+          <h3 class="feature-title" style="font-size: 1.125rem;">How do I start investing?</h3>
+          <p class="feature-text">
+            Simply create an account, verify your identity, fund your wallet, and browse available projects. 
+            You can start with as little as $250.
+          </p>
+        </div>
+        
+        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.1s;">
+          <h3 class="feature-title" style="font-size: 1.125rem;">What is the minimum investment?</h3>
+          <p class="feature-text">
+            Minimum investments vary by project, starting from $250 for agriculture projects and $2,000 for real estate.
+          </p>
+        </div>
+        
+        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.2s;">
+          <h3 class="feature-title" style="font-size: 1.125rem;">How are returns paid?</h3>
+          <p class="feature-text">
+            Returns are credited directly to your wallet at the end of the investment period. 
+            You can withdraw or reinvest as you choose.
+          </p>
+        </div>
+        
+        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.3s;">
+          <h3 class="feature-title" style="font-size: 1.125rem;">Is my investment secure?</h3>
+          <p class="feature-text">
+            All investments carry risk. We conduct thorough due diligence and structure investments 
+            with appropriate safeguards, but returns are not guaranteed.
+          </p>
+        </div>
+        
+        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.4s;">
+          <h3 class="feature-title" style="font-size: 1.125rem;">Can I withdraw early?</h3>
+          <p class="feature-text">
+            Investments are typically locked for the project duration. Early withdrawal may be possible 
+            in certain circumstances but is not guaranteed.
+          </p>
+        </div>
+        
+        <div class="feature-card" data-animate="animate-fadeInUp" style="animation-delay: 0.5s;">
+          <h3 class="feature-title" style="font-size: 1.125rem;">What fees do you charge?</h3>
+          <p class="feature-text">
+            We charge a small management fee on returns (typically 5-10%). There are no hidden fees 
+            or charges for account maintenance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="section" style="padding: 2rem 0;">
+    <div class="container">
+      <div class="disclaimer">
+        <p class="disclaimer-text">
+          <strong>Important Notice:</strong> Returns are not guaranteed. All investments carry risk, including the potential loss of capital. 
+          Past performance does not guarantee future results. Please read our risk disclosure and consult with a financial advisor before investing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🌿</div>
+            <span>TerraWealth</span>
+          </a>
+          <p class="footer-text">
+            TerraWealth Agro is a premium investment platform connecting investors with vetted agricultural and real estate opportunities.
+          </p>
+        </div>
+        
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="invest.html">Invest</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="footer-title">Account</h4>
+          <ul class="footer-links">
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="wallet.html">Wallet</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="footer-title">Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Risk Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          © 2024 TerraWealth Agro. All rights reserved. 
+          <br>
+          <small>Returns are not guaranteed. All investments carry risk.</small>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Contact form handling
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Validate
+      if (!name || !email || !subject || !message) {
+        Toast.error('Please fill in all fields.');
+        return;
+      }
+      
+      if (!Validation.email(email)) {
+        Toast.error('Please enter a valid email address.');
+        return;
+      }
+      
+      // Simulate form submission
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span>';
+      
+      setTimeout(() => {
+        Toast.success('Thank you for your message! We will get back to you within 24 hours.');
+        this.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

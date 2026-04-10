@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet - TerraWealth Agro</title>
+  <meta name="description" content="Manage your TerraWealth Agro wallet. Fund your account, withdraw, and view transaction history.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Dashboard Layout -->
+  <div class="dashboard">
+    <!-- Sidebar Toggle -->
+    <button class="sidebar-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🌿</div>
+          <span>TerraWealth</span>
+        </a>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="dashboard.html">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="invest.html">
+            <span>📈</span>
+            <span>Invest</span>
+          </a></li>
+          <li><a href="wallet.html" class="active">
+            <span>💳</span>
+            <span>Wallet</span>
+          </a></li>
+          <li><a href="updates.html">
+            <span>📰</span>
+            <span>Updates</span>
+          </a></li>
+          <li><a href="profile.html">
+            <span>👤</span>
+            <span>Profile</span>
+          </a></li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" onclick="handleLogout(); return false;" class="btn btn-secondary btn-full" style="justify-content: center;">
+          <span>🚪</span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">My Wallet</h1>
+          <p class="dashboard-subtitle">Manage your funds and view transaction history</p>
+        </div>
+        <div class="user-menu">
+          <div class="user-avatar" id="header-avatar">U</div>
+        </div>
+      </div>
+      
+      <!-- Balance Card -->
+      <div class="wallet-balance-card">
+        <div class="wallet-balance-label">Available Balance</div>
+        <div class="wallet-balance-value" id="wallet-balance">$0.00</div>
+        <div class="wallet-actions">
+          <button class="btn btn-gold" onclick="openFundModal()">+ Fund Wallet</button>
+          <button class="btn btn-outline" onclick="openWithdrawModal()">Withdraw</button>
+        </div>
+      </div>
+      
+      <!-- Quick Stats -->
+      <div class="stats-grid" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <div class="stat-label">Total Deposits</div>
+          <div class="stat-value" id="total-deposits" style="color: var(--success);">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Withdrawals</div>
+          <div class="stat-value" id="total-withdrawals" style="color: var(--danger);">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Invested</div>
+          <div class="stat-value" id="total-invested-wallet">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Returns Received</div>
+          <div class="stat-value" id="total-returns" style="color: var(--success);">$0.00</div>
+        </div>
+      </div>
+      
+      <!-- Transactions List -->
+      <div class="transactions-list">
+        <div class="transactions-header">
+          <h3 class="transactions-title">Transaction History</h3>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="filter-tab active" data-txn-filter="all">All</button>
+            <button class="filter-tab" data-txn-filter="deposit">Deposits</button>
+            <button class="filter-tab" data-txn-filter="withdrawal">Withdrawals</button>
+            <button class="filter-tab" data-txn-filter="investment">Investments</button>
+          </div>
+        </div>
+        <div id="transactions-list">
+          <!-- Transactions will be rendered here -->
+        </div>
+      </div>
+      
+      <!-- Disclaimer -->
+      <div class="disclaimer" style="margin-top: 2rem;">
+        <p class="disclaimer-text">
+          <strong>Important:</strong> Withdrawal requests are processed within 1-3 business days. 
+          A processing fee may apply depending on the withdrawal method.
+        </p>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Fund Wallet Modal -->
+  <div class="modal-overlay" id="fund-modal">
+    <div class="modal" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Fund Your Wallet</h3>
+        <button class="modal-close" onclick="closeFundModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">
+          Add funds to your wallet to start investing. This is a simulated payment for demonstration purposes.
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="fund-amount">Amount ($)</label>
+          <input type="number" id="fund-amount" class="form-input" placeholder="Enter amount" min="10" value="1000">
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(500)">$500</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(1000)">$1,000</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setFundAmount(5000)">$5,000</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeFundModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmFund()">Add Funds</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Withdraw Modal -->
+  <div class="modal-overlay" id="withdraw-modal">
+    <div class="modal" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Withdraw Funds</h3>
+        <button class="modal-close" onclick="closeWithdrawModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1rem; color: var(--text-light);">
+          Available balance: <strong id="withdraw-balance">$0.00</strong>
+        </p>
+        <div class="form-group">
+          <label class="form-label" for="withdraw-amount">Amount ($)</label>
+          <input type="number" id="withdraw-amount" class="form-input" placeholder="Enter amount" min="10">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="withdraw-method">Withdrawal Method</label>
+          <select id="withdraw-method" class="form-select">
+            <option value="bank">Bank Transfer</option>
+            <option value="mobile">Mobile Money</option>
+          </select>
+        </div>
+        <div class="disclaimer" style="margin: 0;">
+          <p class="disclaimer-text" style="font-size: 0.8rem;">
+            Withdrawals are processed within 1-3 business days. A $5 processing fee applies.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeWithdrawModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmWithdraw()">Request Withdrawal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/investment.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    // Check authentication
+    const currentUser = requireAuth();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+    
+    // Update header
+    document.getElementById('header-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+    
+    let txnFilter = 'all';
+    
+    // Render wallet and transactions
+    function renderWallet() {
+      const user = getCurrentUser();
+      document.getElementById('wallet-balance').textContent = Format.currency(user.walletBalance || 0);
+      document.getElementById('withdraw-balance').textContent = Format.currency(user.walletBalance || 0);
+      
+      // Calculate stats
+      const transactions = getUserTransactions(user.id);
+      const deposits = transactions.filter(t => t.type === 'deposit').reduce((sum, t) => sum + t.amount, 0);
+      const withdrawals = transactions.filter(t => t.type === 'withdrawal').reduce((sum, t) => sum + Math.abs(t.amount), 0);
+      const investments = transactions.filter(t => t.type === 'investment').reduce((sum, t) => sum + Math.abs(t.amount), 0);
+      const returns = transactions.filter(t => t.type === 'return').reduce((sum, t) => sum + t.amount, 0);
+      
+      document.getElementById('total-deposits').textContent = Format.currency(deposits);
+      document.getElementById('total-withdrawals').textContent = Format.currency(withdrawals);
+      document.getElementById('total-invested-wallet').textContent = Format.currency(investments);
+      document.getElementById('total-returns').textContent = Format.currency(returns);
+      
+      renderTransactions();
+    }
+    
+    // Render transactions
+    function renderTransactions() {
+      const container = document.getElementById('transactions-list');
+      let transactions = getUserTransactions(currentUser.id);
+      
+      // Apply filter
+      if (txnFilter !== 'all') {
+        transactions = transactions.filter(t => t.type === txnFilter);
+      }
+      
+      if (transactions.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="padding: 3rem;">
+            <div class="empty-icon">📋</div>
+            <h3 class="empty-title">No Transactions</h3>
+            <p class="empty-text">Your transaction history will appear here.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const icons = {
+        deposit: '💰',
+        withdrawal: '💸',
+        investment: '📈',
+        return: '💵'
+      };
+      
+      const typeLabels = {
+        deposit: 'Deposit',
+        withdrawal: 'Withdrawal',
+        investment: 'Investment',
+        return: 'Return'
+      };
+      
+      container.innerHTML = transactions.map(txn => {
+        const isPositive = txn.amount > 0;
+        return `
+          <div class="transaction-item">
+            <div class="transaction-info">
+              <div class="transaction-icon ${txn.type}">${icons[txn.type]}</div>
+              <div class="transaction-details">
+                <h4>${typeLabels[txn.type]}</h4>
+                <p>${txn.description}</p>
+                <p style="font-size: 0.75rem; margin-top: 0.25rem;">${Format.dateTime(txn.date)}</p>
+              </div>
+            </div>
+            <span class="transaction-amount ${isPositive ? 'positive' : 'negative'}">
+              ${isPositive ? '+' : ''}${Format.currency(txn.amount)}
+            </span>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // Transaction filter handlers
+    document.querySelectorAll('[data-txn-filter]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-txn-filter]').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        txnFilter = tab.dataset.txnFilter;
+        renderTransactions();
+      });
+    });
+    
+    // Fund modal functions
+    function openFundModal() {
+      document.getElementById('fund-amount').value = '1000';
+      document.getElementById('fund-modal').classList.add('active');
+    }
+    
+    function closeFundModal() {
+      document.getElementById('fund-modal').classList.remove('active');
+    }
+    
+    function setFundAmount(amount) {
+      document.getElementById('fund-amount').value = amount;
+    }
+    
+    function confirmFund() {
+      const amount = parseFloat(document.getElementById('fund-amount').value);
+      
+      if (!amount || amount < 10) {
+        Toast.error('Minimum deposit is $10');
+        return;
+      }
+      
+      const result = fundWallet(currentUser.id, amount);
+      
+      if (result.success) {
+        Toast.success(result.message);
+        closeFundModal();
+        renderWallet();
+      } else {
+        Toast.error(result.message);
+      }
+    }
+    
+    // Withdraw modal functions
+    function openWithdrawModal() {
+      const user = getCurrentUser();
+      document.getElementById('withdraw-amount').value = '';
+      document.getElementById('withdraw-balance').textContent = Format.currency(user.walletBalance || 0);
+      document.getElementById('withdraw-modal').classList.add('active');
+    }
+    
+    function closeWithdrawModal() {
+      document.getElementById('withdraw-modal').classList.remove('active');
+    }
+    
+    function confirmWithdraw() {
+      const amount = parseFloat(document.getElementById('withdraw-amount').value);
+      const user = getCurrentUser();
+      
+      if (!amount || amount < 10) {
+        Toast.error('Minimum withdrawal is $10');
+        return;
+      }
+      
+      if (amount > (user.walletBalance || 0)) {
+        Toast.error('Insufficient balance');
+        return;
+      }
+      
+      const result = withdrawFromWallet(currentUser.id, amount);
+      
+      if (result.success) {
+        Toast.success(result.message + ' Your request will be processed within 1-3 business days.');
+        closeWithdrawModal();
+        renderWallet();
+      } else {
+        Toast.error(result.message);
+      }
+    }
+    
+    // Handle logout
+    function handleLogout() {
+      logoutUser();
+      Toast.success('You have been logged out successfully.');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+    
+    // Initial render
+    renderWallet();
+  </script>
+</body>
+</html>
